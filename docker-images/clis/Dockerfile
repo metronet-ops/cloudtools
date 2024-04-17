@@ -1,0 +1,47 @@
+# Use an official Node.js runtime as the base image
+FROM ubuntu:latest
+
+# Install Node Js 20 Latest
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# Install AWS CLI
+RUN apt-get update && \
+    apt-get install -y curl unzip && \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm awscliv2.zip
+
+# Install HashiCorp Vault CLI
+RUN apt-get install -y gpg && \
+    apt-get install -y wget  && \
+    apt-get install -y lsb-release && \
+    wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
+    gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list && \
+    apt-get update && \
+    apt-get install -y vault
+
+# Install AWS SDK for Node.js globally
+RUN npm install -g aws-sdk
+
+# Install kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# Create a new user and switch to it
+RUN useradd -ms /bin/bash ops
+USER ops
+
+# Set the working directory
+WORKDIR /home/ops
+
+# Set permissions to allow the user to add files
+USER root
+RUN chown -R ops:ops /home/ops
+USER ops
+# Set the entrypoint to a shell
+CMD ["/bin/bash"]
