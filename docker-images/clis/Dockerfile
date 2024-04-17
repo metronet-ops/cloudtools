@@ -32,6 +32,11 @@ RUN npm install -g aws-sdk
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
+# Install ArgoCD
+RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && \
+    install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
+    rm argocd-linux-amd64
+
 # Create a new user and switch to it
 RUN useradd -ms /bin/bash ops
 USER ops

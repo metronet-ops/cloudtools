@@ -2,7 +2,8 @@
 
 This repository contains various cloud and developer tools to streamline your development and deployment processes. From Docker images to CLI tools, this collection aims to provide everything you need in one place.
 
-## Docker Image with Essential CLIs
+### Docker Image with Essential CLIs
+`docker-images/clis/Dockerfile`
 
 We've created a Docker image that comes pre-installed with essential command-line interfaces (CLIs) to make your life easier. This Docker image includes:
 
@@ -10,8 +11,9 @@ We've created a Docker image that comes pre-installed with essential command-lin
 - kubectl
 - HashiCorp Vault
 - Node.js
+- ArgoCD
 
-### Using the Docker Image
+#### Using the Docker Image
 
 To use this Docker image, you can pull it from Docker Hub:
 
