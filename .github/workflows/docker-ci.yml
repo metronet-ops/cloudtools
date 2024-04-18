@@ -38,8 +38,6 @@ jobs:
       # get package name and version from a file called package.json from the environment variable called FOLDER_PATH/package.json
       - name: Get package name and version
         id: package
-        env:
-          FOLDER_PATH: ${{ steps.changed-path.outputs.folder }}
         run: |
           echo "PACKAGE_NAME=$(jq -r '.name' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
           echo "PACKAGE_AUTHOR=$(jq -r '.author' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
