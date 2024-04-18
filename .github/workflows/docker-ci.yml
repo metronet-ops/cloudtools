@@ -19,7 +19,7 @@ jobs:
       - name: Get changed path
         id: changed-path
         run: |
-          FOLDER_PATH=$(dirname $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}))"
+          FOLDER_PATH=$(dirname $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}))
           echo "$FOLDER_PATH"
         env:
           FOLDER_PATH: $FOLDER_PATH

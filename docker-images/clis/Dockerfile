@@ -46,6 +46,7 @@ USER ops
 
 WORKDIR /home/ops
 
+# Add Permission
 USER root
 RUN chown -R ops:ops /home/ops
 USER ops
