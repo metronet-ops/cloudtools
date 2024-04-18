@@ -44,6 +44,7 @@ RUN apt-get install -y jq
 RUN useradd -ms /bin/bash ops
 USER ops
 
+# Change Directory
 WORKDIR /home/ops
 
 # Add Permission to user
