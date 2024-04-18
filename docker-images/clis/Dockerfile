@@ -40,16 +40,13 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
 # Install JQ
 RUN apt-get install -y jq
 
-# Create a new user and switch to it
 RUN useradd -ms /bin/bash ops
 USER ops
 
-# Set the working directory
 WORKDIR /home/ops
 
-# Set permissions to allow the user to add files
 USER root
 RUN chown -R ops:ops /home/ops
 USER ops
-# Set the entrypoint to a shell
+
 CMD ["/bin/bash"]

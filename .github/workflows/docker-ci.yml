@@ -43,7 +43,7 @@ jobs:
           echo "PACKAGE_AUTHOR=$(jq -r '.author' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
           echo "PACKAGE_VERSION=$(jq -r '.version' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
         env:
-          REPO: $PACKAGE_NAME/$PACKAGE_AUTHOR
+          REPO: $PACKAGE_AUTHOR/$PACKAGE_NAME
       - name: Build Docker image
         run: |
           docker build -f $FOLDER_PATH/Dockerfile -t $REPO:$SHA -t $REPO:latest -t $REPO:$PACKAGE_VERSION .
