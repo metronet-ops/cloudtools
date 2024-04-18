@@ -51,5 +51,5 @@ USER root
 RUN chown -R ops:ops /home/ops
 USER ops
 
-# Add Entrypoint
+# Add Entrypoint to bash
 CMD ["/bin/bash"]
