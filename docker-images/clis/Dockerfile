@@ -1,7 +1,7 @@
 # Using Ubuntu as base image
 FROM ubuntu:latest
 
-# Install Node Js 20 Latest
+# Install Node Js
 RUN apt-get update && \
     apt-get install -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
