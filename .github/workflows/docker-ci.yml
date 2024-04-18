@@ -19,8 +19,7 @@ jobs:
       - name: Get changed path
         id: changed-path
         run: |
-          FOLDER_PATH=$(dirname $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}))
-          echo "$FOLDER_PATH" >> $GITHUB_ENV
+          echo "folder=$(dirname $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}))" >> "$GITHUB_OUTPUT"
 
       - name: Login to Docker Registry
         uses: docker/login-action@v3
@@ -39,13 +38,16 @@ jobs:
       # get package name and version from a file called package.json from the environment variable called FOLDER_PATH/package.json
       - name: Get package name and version
         id: package
+        env:
+          FOLDER_PATH: ${{ steps.changed-path.outputs.folder }}
         run: |
           echo "PACKAGE_NAME=$(jq -r '.name' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
           echo "PACKAGE_AUTHOR=$(jq -r '.author' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
           echo "PACKAGE_VERSION=$(jq -r '.version' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
+
+      - name: Build Docker image
         env:
           REPO: $PACKAGE_AUTHOR/$PACKAGE_NAME
-      - name: Build Docker image
         run: |
           docker build -f $FOLDER_PATH/Dockerfile -t $REPO:$SHA -t $REPO:latest -t $REPO:$PACKAGE_VERSION .
 
