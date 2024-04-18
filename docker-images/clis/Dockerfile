@@ -1,4 +1,4 @@
-# Use an official Node.js runtime as the base image
+# Using Ubuntu as base image
 FROM ubuntu:latest
 
 # Install Node Js 20 Latest
