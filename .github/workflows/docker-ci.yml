@@ -19,7 +19,6 @@ jobs:
         id: changed-path
         run: |
           echo "FOLDER_PATH=$(dirname $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}))" >> $GITHUB_ENV
-          echo $FOLDER_PATH
 
       - name: Login to Docker Registry
         uses: docker/login-action@v3
@@ -40,13 +39,16 @@ jobs:
         id: package
         run: |
           echo "PACKAGE_NAME=$(jq -r '.name' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
+          echo "PACKAGE_AUTHOR=$(jq -r '.author' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
           echo "PACKAGE_VERSION=$(jq -r '.version' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
+        env:
+          REPO: $PACKAGE_NAME/$PACKAGE_AUTHOR
       - name: Build Docker image
         run: |
-          docker build -f $FOLDER_PATH/Dockerfile -t $PACKAGE_NAME:$SHA -t $PACKAGE_NAME:latest -t $PACKAGE_NAME:$PACKAGE_VERSION .
+          docker build -f $FOLDER_PATH/Dockerfile -t $REPO:$SHA -t $REPO:latest -t $REPO:$PACKAGE_VERSION .
 
       - name: Push Docker image
         run: |
-          docker push $PACKAGE_NAME:$SHA
-          docker push $PACKAGE_NAME:$PACKAGE_VERSION
-          docker push $PACKAGE_NAME:latest
+          docker push $REPO:$SHA
+          docker push $REPO:$PACKAGE_VERSION
+          docker push $REPO:latest
