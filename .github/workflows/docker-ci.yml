@@ -45,7 +45,7 @@ jobs:
 
       - name: Build Docker image
         env:
-          REPO: $PACKAGE_AUTHOR/$PACKAGE_NAME
+          REPO: ${{env.PACKAGE_AUTHOR}}/${{env.PACKAGE_AUTHOR}}
         run: |
           docker build -f $FOLDER_PATH/Dockerfile -t $REPO:$SHA -t $REPO:latest -t $REPO:$PACKAGE_VERSION .
 
