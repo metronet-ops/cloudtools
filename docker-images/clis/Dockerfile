@@ -40,7 +40,7 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
 # Install JQ
 RUN apt-get install -y jq
 
-# Add User
+# Add Ops User
 RUN useradd -ms /bin/bash ops
 USER ops
 
