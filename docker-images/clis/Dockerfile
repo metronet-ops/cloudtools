@@ -37,6 +37,9 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
     install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
     rm argocd-linux-amd64
 
+# Install JQ
+RUN apt-get install -y jq
+
 # Create a new user and switch to it
 RUN useradd -ms /bin/bash ops
 USER ops
