@@ -25,7 +25,7 @@ RUN apt-get install -y gpg && \
     apt-get update && \
     apt-get install -y vault
 
-# Install AWS SDK for Node.js globally
+# Install AWS SDK for Node.js
 RUN npm install -g aws-sdk
 
 # Install kubectl
