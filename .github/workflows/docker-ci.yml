@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - '**/Dockerfile*'
+      - '**/package.json'
 
 jobs:
   build-and-push:
