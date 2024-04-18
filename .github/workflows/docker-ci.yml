@@ -20,9 +20,7 @@ jobs:
         id: changed-path
         run: |
           FOLDER_PATH=$(dirname $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}))
-          echo "$FOLDER_PATH"
-        env:
-          FOLDER_PATH: $FOLDER_PATH
+          echo "$FOLDER_PATH" >> $GITHUB_ENV
 
       - name: Login to Docker Registry
         uses: docker/login-action@v3
