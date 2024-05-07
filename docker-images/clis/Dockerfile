@@ -50,7 +50,7 @@ USER ops
 # Change Directory
 WORKDIR /home/ops
 
-# Add Permission to user
+# Add Permission to User
 USER root
 RUN chown -R ops:ops /home/ops
 USER ops
