@@ -54,4 +54,8 @@ jobs:
         run: |
           docker push $REPO:$SHA
           docker push $REPO:$PACKAGE_VERSION
+
+      - name: Push Latest Tag
+        if: github.ref_name == 'main'
+        run: |          
           docker push $REPO:latest
