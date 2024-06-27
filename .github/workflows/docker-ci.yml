@@ -52,10 +52,11 @@ jobs:
           docker build -f $FOLDER_PATH/Dockerfile -t $REPO:$SHA -t $REPO:latest -t $REPO:$PACKAGE_VERSION .
 
       - name: Push Docker image
-        shell: bash
         run: |
           docker push $REPO:$SHA
           docker push $REPO:$PACKAGE_VERSION
-          if [ ${{ github.ref_name }} == "main" ]
-            docker push $REPO:latest
-          fi
+
+      - name: Push Latest Tag
+        if: github.ref_name == "main"
+        run: |          
+          docker push $REPO:latest
