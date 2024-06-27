@@ -45,7 +45,7 @@ RUN apt-get install -y jq
 # Install YQ
 RUN apt-get install -y yq
 
-# Install GitHub CLI
+# Install Github CLI
 RUN (type -p wget >/dev/null || (apt update && apt-get install wget -y)) \
     && mkdir -p -m 755 /etc/apt/keyrings \
     && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
