@@ -7,6 +7,7 @@ on:
     paths:
       - '**/Dockerfile*'
       - '**/package.json'
+  workflow_dispatch:
 
 jobs:
   build-and-push:
