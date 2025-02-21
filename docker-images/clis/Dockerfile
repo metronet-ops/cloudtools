@@ -67,9 +67,9 @@ RUN apt-get update
 RUN apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Install QScanner v4.2.0
-RUN wget "https://www.qualys.com/qscanner/download/v4.2.0/download_qscanner.sh" \
+RUN wget https://www.qualys.com/qscanner/download/v4.2.0/download_qscanner.sh \
     && chmod +x download_qscanner.sh \
-    && ./download_qscanner.sh
+    && bash ./download_qscanner.sh
 
 # Add Ops User
 RUN useradd -ms /bin/bash ops
