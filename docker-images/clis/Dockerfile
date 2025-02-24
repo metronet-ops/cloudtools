@@ -43,7 +43,10 @@ RUN curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases
 RUN apt-get install -y jq
 
 # Install YQ
-RUN apt-get install -y yq
+RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq \
+    && chmod +x /usr/bin/yq \
+    && yq --version
+
 
 # Install Github CLI
 RUN (type -p wget >/dev/null || (apt update && apt-get install wget -y)) \
