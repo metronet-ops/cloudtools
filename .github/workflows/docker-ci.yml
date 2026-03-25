@@ -20,8 +20,7 @@ jobs:
       - name: Get changed path
         id: changed-path
         run: |
-          echo "FOLDER_PATH=$(dirname $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}))" >> "$GITHUB_ENV"
-
+          echo "FOLDER_PATH=./docker-images/clis" >> "$GITHUB_ENV"
       - name: Login to Docker Registry
         uses: docker/login-action@v3
         with:
@@ -42,7 +41,6 @@ jobs:
           echo "PACKAGE_NAME=$(jq -r '.name' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
           echo "PACKAGE_AUTHOR=$(jq -r '.author' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
           echo "PACKAGE_VERSION=$(jq -r '.version' $FOLDER_PATH/package.json)" >> $GITHUB_ENV
-
       - name: Setup Repo
         run: |
           echo "REPO=${{env.PACKAGE_AUTHOR}}/${{env.PACKAGE_NAME}}" >> $GITHUB_ENV
@@ -50,12 +48,10 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -f $FOLDER_PATH/Dockerfile -t $REPO:$SHA -t $REPO:latest -t $REPO:$PACKAGE_VERSION .
-
       - name: Push Docker image
         run: |
           docker push $REPO:$SHA
           docker push $REPO:$PACKAGE_VERSION
-
       - name: Push Latest Tag
         if: github.ref_name == 'main'
         run: |          
