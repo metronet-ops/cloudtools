@@ -1,5 +1,8 @@
-# Using Ubuntu as base image
-FROM ubuntu:latest
+# Using GitHub Actions runner as base image
+FROM ghcr.io/actions/actions-runner:latest
+
+# Ensure package installs run as root
+USER root
 
 # Install Node Js
 RUN apt-get update && \
@@ -75,17 +78,8 @@ RUN wget https://www.qualys.com/qscanner/download/v4.2.0/download_qscanner.sh \
     && ln -s $(pwd)/linux-amd64/qscanner /usr/local/bin/qscanner
 RUN qscanner --version
 
-# Add Ops User
-RUN useradd -ms /bin/bash ops
-USER ops
+# Keep runner user expected by ARC
+USER runner
 
 # Change Directory
-WORKDIR /home/ops
-
-# Add Permission to User
-USER root
-RUN chown -R ops:ops /home/ops
-USER ops
-
-# Add Entrypoint to bash
-CMD ["/bin/bash"]
+WORKDIR /home/runner
