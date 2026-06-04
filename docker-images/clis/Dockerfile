@@ -1,5 +1,5 @@
 # Using GitHub Actions runner as base image
-FROM ghcr.io/actions/actions-runner:latest
+FROM ghcr.io/actions/actions-runner:2.334.0
 
 # Ensure package installs run as root
 USER root
