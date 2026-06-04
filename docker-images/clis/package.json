@@ -1,7 +1,7 @@
 {
     "name": "cloudtools",
     "author": "metronetops",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A Docker image with essential DevOps tools",
     "license": "MIT"
 }
