@@ -56,7 +56,7 @@ RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
     && chmod +x /usr/bin/yq
 
 #Install Kustomize
-RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash -s -- /usr/local/bin
 
 # Install Github CLI
 RUN (type -p wget >/dev/null || (apt update && apt-get install wget -y)) \
