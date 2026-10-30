@@ -1,14 +1,14 @@
 # Using GitHub Actions runner as base image
-FROM ghcr.io/actions/actions-runner:2.337.0
+FROM ghcr.io/actions/actions-runner:2.338.2
 
 # Ensure package installs run as root
 USER root
 
 # Install Node Js
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs
+RUN apt-get update && apt-get install -y curl \
+   && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+   && apt-get install -y nodejs=24.22.1-1nodesource1 \
+   && node --version
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /etc/apt/keyrings/yarn-archive-keyring.gpg > /dev/null \
