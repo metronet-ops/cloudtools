@@ -32,8 +32,8 @@ RUN apt-get install -y gpg && \
     gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list && \
     apt-get update
-   
-# Install HashiCorp Vault CLI    
+
+# Install HashiCorp Vault CLI
 RUN apt-get install vault
 
 # Install AWS SDK for Node.js
@@ -76,7 +76,7 @@ RUN echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
     tee /etc/apt/sources.list.d/docker.list > /dev/null
-RUN apt-get update    
+RUN apt-get update
 RUN apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Install QScanner v4.2.0
@@ -85,6 +85,12 @@ RUN wget https://www.qualys.com/qscanner/download/v4.2.0/download_qscanner.sh \
     && bash ./download_qscanner.sh \
     && ln -s $(pwd)/linux-amd64/qscanner /usr/local/bin/qscanner
 RUN qscanner --version
+
+# Patch libbrotli1 (fix: 1.1.0-2ubuntu0.1)
+RUN apt-get update \
+    && apt-get install -y --only-upgrade libbrotli1 \
+    && dpkg -s libbrotli1 | grep -E '^Version: 1.1.0-2ubuntu0.1' \
+    && rm -rf /var/lib/apt/lists/*
 
 # Keep runner user expected by ARC
 USER runner
